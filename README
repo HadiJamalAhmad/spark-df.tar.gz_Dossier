@@ -1,0 +1,63 @@
+Datasets utilisés :
+Codes postaux - laposte_hesasmal.csv -  https://www.data.gouv.fr/fr/datasets/base-officielle-des-codes-postaux/ 
+Départements français - departement.csv - https://sql.sh/1879-base-donnees-departements-francais
+
+Ouvrez le fichier des codes postaux. 
+Combien de colonnes contient-il ? 
+6 colonnes.
+Comment ces colonnes sont-elles distribues ? 
+Code_commune_INSEE;Nom_commune;Code_postal;Ligne_5;Libell�_d_acheminement;coordonnees_gps
+Quelle sont les types des colonnes du fichier ?
+Code_commune_INSEE : Int; Nom_commune : Char, Code_postal : Int, Ligne_5 : Char, Libell�_d_acheminement : Double,coordonnees_gps : Double 
+Lisez le fichier des codes postaux avec Spark et affichez son contenu dans la console. 
+
+
+Questions :
+
+Quel est le schéma du fichier ? 
+
+root
+ |-- Code_commune_INSEE: string (nullable = true)
+ |-- Nom_commune: string (nullable = true)
+ |-- Code_postal: integer (nullable = true)
+ |-- Ligne_5: string (nullable = true)
+ |-- Libellé_d_acheminement: string (nullable = true)
+ |-- coordonnees_gps: string (nullable = true)
+
+Affichez le nombre de communes.
+
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+|approx_count_distinct(coordonnees_gps)|approx_count_distinct(Nom_commune)|approx_count_distinct(Code_postal)|approx_count_distinct(Libellé_d_acheminement)|approx_count_distinct(Ligne_5)|approx_count_distinct(Code_commune_INSEE)|
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+|                                 38060|                             29819|                              6083|                                        30263|                          4211|                                    34105|
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+
+Il y a 29819 noms de communes, je considère que cela signifie qu'il y a 29819 communes.
+
+Affichez le nombre de communes qui possèdent l’attribut Ligne_5
+
+Il y a 4211 communes qui possèdent l'attribut Ligne 5.
+
+Ajoutez aux données une colonne contenant le numéro de département de la commune. 
+
+2022-03-17 21:23:39,564 - WARN  [run-main-0] org.apache.spark.sql.catalyst.util.package - Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+|approx_count_distinct(coordonnees_gps)|approx_count_distinct(Nom_commune)|approx_count_distinct(Code_postal)|approx_count_distinct(Libellé_d_acheminement)|approx_count_distinct(Ligne_5)|approx_count_distinct(Code_commune_INSEE)|
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+|                                 38060|                             29819|                              6083|                                        30263|                          4211|                                    34105|
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+|approx_count_distinct(coordonnees_gps)|approx_count_distinct(Nom_commune)|approx_count_distinct(Code_postal)|approx_count_distinct(Libellé_d_acheminement)|approx_count_distinct(Ligne_5)|approx_count_distinct(Code_commune_INSEE)|
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+|                                 38060|                             29819|                              6083|                                        30263|                          4211|                                    34105|
++--------------------------------------+----------------------------------+----------------------------------+---------------------------------------------+------------------------------+-----------------------------------------+
+
+
+Ecrivez le résultat dans un nouveau fichier CSV nommé “commune_et_departement.csv”, ayant pour colonne Code_commune_INSEE, Nom_commune, Code_postal, departement, ordonné par code postal.
+Affichez les communes du département de l’Aisne.
+
+
+
+Quel est le département avec le plus de communes ?
+
